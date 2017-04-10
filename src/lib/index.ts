@@ -9,10 +9,9 @@ export function lint(opts: IOptions = {}): Array<ValidateResult> {
 
   const parser = new ValidatorConfigParser();
   const files = opts.files && opts.files.length ? opts.files : parser.files();
-  const options = parser.options(opts.format || 'json');
-  if (opts.fix) {
-    options.fix = opts.fix
-  }
+  const format = opts.format || 'json';
+  const fix = opts.fix || false
+  const options = parser.options({ format, fix });
 
   if (files && files.length && options) {
     const validator = new Validator(options);

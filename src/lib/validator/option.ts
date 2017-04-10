@@ -2,6 +2,11 @@ import { FormatterFunction, ILinterOptions } from 'tslint'
 import { ValidatorOutputFormat } from './format';
 import { IConfigurationFile } from 'tslint/lib/configuration';
 
+export interface IConfigParserOptions {
+  format: string
+  fix: boolean
+}
+
 export class ValidatorOption {
 
   configuration?: IConfigurationFile;
@@ -10,14 +15,15 @@ export class ValidatorOption {
   fix?: boolean;
   rulesDirectory?: string | string[];
 
-  constructor(format: string, configuration: IConfigurationFile) {
+  constructor({format, fix} : IConfigParserOptions, configuration: IConfigurationFile) {
+    this.fix = fix
     this.formatter = ValidatorOutputFormat.getFormatter(format);
     this.configuration = configuration;
   }
 
   options(): ILinterOptions {
     return {
-      fix: true,
+      fix: this.fix,
       formatter: this.formatter
       // formattersDirectory?: string,
       // rulesDirectory?: string | string[],

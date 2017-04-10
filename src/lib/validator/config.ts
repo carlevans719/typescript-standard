@@ -1,18 +1,18 @@
 import * as path from 'path'
 import * as glob from 'glob'
 import { findup, find, load, isDirectory, includesInArray, startsWith } from '../utils'
-import { ValidatorOption } from './option'
+import { ValidatorOption, IConfigParserOptions } from './option'
 import { Linter } from 'tslint';
 
 export class ValidatorConfigParser {
 
-  options(format: string): ValidatorOption {
+  options({format, fix = false}: IConfigParserOptions): ValidatorOption {
     const defaultTSLintOptions = findup('tslint.json');
     if (!defaultTSLintOptions) {
       return null;
     }
     const configuration = Linter.loadConfigurationFromPath(defaultTSLintOptions);
-    return new ValidatorOption(format, configuration);
+    return new ValidatorOption({format, fix}, configuration);
   }
 
   files(): Array<string> {
