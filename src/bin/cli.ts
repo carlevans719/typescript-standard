@@ -10,6 +10,7 @@ const parameters = process.argv.slice(2);
 const otherParameters = parameters.filter(p => !startsWith(p, '-'));
 const isPrettyFlag = includesInArray(parameters, '--pretty');
 const isVerboseFlag = includesInArray(parameters, '--verbose');
+const isFixFlag = includesInArray(parameters, '--fix');
 
 let files = null;
 
@@ -30,6 +31,11 @@ else if (isVerboseFlag) {
   format = 'verbose';
 }
 
+let fix = false;
+if (isFixFlag) {
+  fix = true;
+}
+
 let callback: ValidatorCallback = function (result: ValidateResult) {
   if (result.failureCount > 0) {
     // TSLINT not support fix
@@ -47,7 +53,7 @@ let callback: ValidatorCallback = function (result: ValidateResult) {
   return false;
 };
 
-lint({ format, files, callback });
+lint({ format, fix, files, callback });
 
 if (isPrettyFlag) {
   pretty({ files });

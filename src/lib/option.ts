@@ -6,6 +6,7 @@ export interface ValidatorCallback {
 
 export interface IOptions {
   format?: string,
+  fix?: boolean
   files?: Array<string>
   callback?: ValidatorCallback
 }

@@ -7,6 +7,7 @@ export class ValidatorOption {
   configuration?: IConfigurationFile;
   formatter?: string | FormatterFunction;
   formattersDirectory?: string;
+  fix?: boolean;
   rulesDirectory?: string | string[];
 
   constructor(format: string, configuration: IConfigurationFile) {
